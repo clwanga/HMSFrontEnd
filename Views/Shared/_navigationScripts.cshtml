@@ -1,0 +1,647 @@
+﻿<script>
+    $(document).ready(function () {
+        const parentDetails = document.querySelectorAll(".parentDetails");
+        const childDetails = document.querySelectorAll(".childDetails");
+
+        parentDetails.forEach((dt) => {
+            dt.addEventListener("toggle", toggleOpenOneOnly_);
+        });
+
+        function toggleOpenOneOnly_(e) {
+            if (this.open) {
+                parentDetails.forEach((deet) => {
+                    if (deet != this && deet.open) deet.open = false;
+                });
+            }
+        }
+
+        childDetails.forEach((dt) => {
+            dt.addEventListener("toggle", toggleOpenOneOnly);
+        });
+
+        function toggleOpenOneOnly(e) {
+            if (this.open) {
+                childDetails.forEach((deet) => {
+                    if (deet != this && deet.open) deet.open = false;
+                });
+            }
+        }
+
+        function userManagementDetails() {
+            var details = document.getElementsByClassName("details-toggle");
+            details[1].setAttribute("open", true);
+            //for (let index = 0; index < details.length; index++) {
+            //    details[index].setAttribute("open", true);
+            //}
+        }
+
+        function detailupdateData() {
+            var details = document.getElementsByClassName("detailsupdate-toggle");
+            details[1].setAttribute("open", true);
+            //for (let index = 0; index < details.length; index++) {
+            //    details[index].setAttribute("open", true);
+            //}
+        }
+
+        function sectionDetails(cls) {
+            var details = document.getElementsByClassName(cls);
+            details[1].setAttribute("open", true);
+        }
+
+        var pageURL = window.location.href;
+
+        if (pageURL.includes("/Users/Index")) {
+            userManagementDetails();
+
+            $(".staff").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Home/Dashboard")) {
+            $(".dashboard").addClass("bg-crvsblue-900 ");
+        }
+        else if (pageURL.includes("/Home/BookNumbers")) {
+            $(".BookNumbers").addClass("bg-crvsblue-900 ");
+        }
+        else if (pageURL.includes("/Home/Searching")) {
+            $(".search").addClass("bg-crvsblue-900 ");
+        }
+        else if (pageURL.includes("/Home/KitManagement")) {
+            $(".kitManagement").addClass("bg-crvsblue-900 ");
+        }
+        else if (pageURL.includes("/Home/CRVSDeviceManagement")) {
+            $(".CRVSDeviceManagement").addClass("bg-crvsblue-900 ");
+        }
+
+        else if (pageURL.includes("/Permissions/Index")) {
+            sectionDetails("perm-details");
+
+            userManagementDetails();
+
+            $(".permission").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Permissions/AssIndividualPermission")) {
+            sectionDetails("perm-details");
+            userManagementDetails();
+
+            $(".assignpermission").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Permissions/UserPermissions")) {
+            sectionDetails("perm-details");
+            userManagementDetails();
+
+            $(".userspermissions").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Group/Index")) {
+            sectionDetails("group-details");
+            userManagementDetails();
+
+            $(".groups").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Group/AssignUserGroup")) {
+            sectionDetails("group-details");
+            userManagementDetails();
+
+            $(".usergroups").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Group/ViewUserGroup")) {
+            sectionDetails("group-details");
+            userManagementDetails();
+
+            $(".ViewUserGroup").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/ActivityLog/Index")) {
+            sectionDetails("logs-details");
+            //userManagementDetails();
+
+            $(".all-logs").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Group/AssignGroupPermission")) {
+            sectionDetails("group-details");
+            userManagementDetails();
+
+            $(".assignGroupPermission").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Group/GroupPermission")) {
+            sectionDetails("group-details");
+            userManagementDetails();
+
+            $(".GroupPermission").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/EarlyBirthRegistration/Index")) {
+
+            sectionDetails("registration-toggle");
+
+            $(".earlyRegistration").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DeathRegistration/Index")) {
+
+            sectionDetails("death-toggle");
+
+            $(".dearlyRegistration").addClass("bg-crvsblue-900");
+        }
+        //else if (pageURL.includes("/EarlyBirthRegistration/AddEarlyBirthRegistration")) {
+        //
+        //    sectionDetails("registration-toggle");
+
+        //    $(".earlyRegistration").addClass("bg-crvsblue-900");
+        //}
+        else if (pageURL.includes("/EarlyBirthRegistration/Assessment")) {
+
+            sectionDetails("registration-toggle");
+
+            $(".Assessment").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DeathRegistration/Assessment")) {
+
+            sectionDetails("death-toggle");
+
+            $(".dAssessment").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/EarlyBirthRegistration/Investigator")) {
+
+            sectionDetails("registration-toggle");
+
+            $(".Investigator").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DeathRegistration/Investigator")) {
+
+            sectionDetails("death-toggle");
+
+            $(".dInvestigator").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/EarlyBirthRegistration/SecondAssessment")) {
+
+            sectionDetails("registration-toggle");
+
+            $(".SecondAssessment").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/EarlyBirthRegistration/HQOfficer")) {
+
+            sectionDetails("registration-toggle");
+
+            $(".HQOfficer").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DeathRegistration/HQOfficer")) {
+
+            sectionDetails("death-toggle");
+
+            $(".dHQOfficer").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/EarlyBirthRegistration/EarlyBirthPrinting")) {
+
+            sectionDetails("registration-toggle");
+
+            $(".EarlyBirthPrinting").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/EarlyBirthRegistration/QualityCheck")) {
+
+            sectionDetails("registration-toggle");
+
+            $(".QCheckb").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/EarlyBirthRegistration/Issuance")) {
+
+            sectionDetails("registration-toggle");
+
+            $(".Issuanceb").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DeathRegistration/DeathPrinting")) {
+
+            sectionDetails("death-toggle");
+
+            $(".EarlyDeathPrinting").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/EarlyBirthRegistration/EarlyBirthRejected")) {
+            sectionDetails("birth-details");
+            sectionDetails("registration-toggle");
+
+            $(".EarlyBirthRejected").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/EarlyBirthRegistration/BirthCancelled")) {
+            sectionDetails("birth-details");
+            sectionDetails("registration-toggle");
+
+            $(".EarlyBirthCancelled").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/EarlyBirthRegistration/Issued")) {
+            sectionDetails("birth-details");
+            sectionDetails("registration-toggle");
+
+            $(".Issuedb").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DeathRegistration/Issued")) {
+            sectionDetails("death-details");
+            sectionDetails("death-toggle");
+
+            $(".Issuedd").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DeathRegistration/DeathRejected")) {
+            sectionDetails("death-details");
+            sectionDetails("death-toggle");
+
+            $(".EarlyDeathRejected").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DeathRegistration/DeathCancelled")) {
+            sectionDetails("death-details");
+            sectionDetails("death-toggle");
+
+            $(".EarlyDeathCancelled").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DeathRegistration/QualityCheck")) {
+
+            sectionDetails("death-toggle");
+
+            $(".QCheckd").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DeathRegistration/Issuance")) {
+
+            sectionDetails("death-toggle");
+
+            $(".Issuanced").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Home/Billing")) {
+            sectionDetails("billings-toggle");
+
+            $(".Billing").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Home/OnlineBilling")) {
+            sectionDetails("billings-toggle");
+
+            $(".OnlineBilling").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Home/PaymentInvoice")) {
+            sectionDetails("payment-toggle");
+
+            $(".PaymentInvoice").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Home/PaymentReceipts")) {
+            sectionDetails("payment-toggle");
+
+            $(".PaymentReceipts").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/ActivityLog/SQLLogs")) {
+
+
+            $(".ErrorLogs").addClass("bg-crvsblue-900");
+        }
+        //
+        else if (pageURL.includes("pages/earlybirthform.html") || pageURL.includes("pages/earlybirthregistration.html")) {
+
+            sectionDetails("registration-toggle");
+
+            $(".earlyRegistration").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DetailUpdate/Assessment")) {
+
+            detailupdateData();
+
+            $(".bupdateassess").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DetailUpdate/HQOfficer")) {
+
+            detailupdateData();
+
+            $(".bupdatehqofficer").addClass("bg-crvsblue-900");
+        }
+
+        else if (pageURL.includes("/DetailUpdate/DeathAssessment")) {
+
+            detailupdateData();
+
+            $(".dupdateassess").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DetailUpdate/MarriageAssessment")) {
+
+            detailupdateData();
+
+            $(".mupdateassess").addClass("bg-crvsblue-900");
+        }
+
+        else if (pageURL.includes("/DetailUpdate/DeathHQOfficer")) {
+
+            detailupdateData();
+
+            $(".dupdatehqofficer").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DetailUpdate/MarriageHQOfficer")) {
+
+            detailupdateData();
+
+            $(".mupdatehqofficer").addClass("bg-crvsblue-900");
+        }
+
+        else if (pageURL.includes("/Appeal/HQAssessment")) {
+            sectionDetails("appeal");
+            //userManagementDetails();
+
+            $(".appealhq").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Appeal/FirstAssessment")) {
+            sectionDetails("appeal");
+            //userManagementDetails();
+
+            $(".appealassess").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Appeal/MinisterAssessment")) {
+            sectionDetails("appeal");
+            //userManagementDetails();
+
+            $(".appealminister").addClass("bg-crvsblue-900");
+        }
+
+        else if (pageURL.includes("/Cancellation/BirthApplication")) {
+            sectionDetails("cancel");
+            //userManagementDetails();
+
+            $(".cancelbirth").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Cancellation/DeathApplication")) {
+            sectionDetails("cancel");
+            //userManagementDetails();
+
+            $(".canceldeath").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Cancellation/MarriageApplication")) {
+            sectionDetails("cancel");
+            //userManagementDetails();
+
+            $(".cancelmarriage").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Cancellation/DivorceApplication")) {
+            sectionDetails("cancel");
+            //userManagementDetails();
+
+            $(".canceldivorce").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Cancellation/AdoptionApplication")) {
+            sectionDetails("cancel");
+            //userManagementDetails();
+
+            $(".canceladoption").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Registrar/Index")) {
+            sectionDetails("marriageRegistar-toggle");
+
+            $(".marriageRegistar").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Registrar/BooksManagement")) {
+            sectionDetails("marriageRegistar-toggle");
+
+            $(".marriageBooks").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageRegistration/Assessment")) {
+            sectionDetails("marriage-toggle");
+
+            $(".MAssessment").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageRegistration/Registration")) {
+            sectionDetails("marriage-toggle");
+
+            $(".MRegistration").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageRegistration/Investigation")) {
+            sectionDetails("marriage-toggle");
+
+            $(".MInvestigator").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageRegistration/HQOfficer")) {
+            sectionDetails("marriage-toggle");
+
+            $(".MHQOfficer").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageRegistration/MarriageRejected")) {
+            sectionDetails("marriage-details");
+            sectionDetails("marriage-toggle");
+
+            $(".MRejected").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageRegistration/Issued")) {
+            sectionDetails("marriage-details");
+            sectionDetails("marriage-toggle");
+
+            $(".Issuedm").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageRegistration/MarriageCancelled")) {
+            sectionDetails("marriage-details");
+            sectionDetails("marriage-toggle");
+
+            $(".MCancelled").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageRegistration/MarriagePrinting")) {
+            sectionDetails("marriage-toggle");
+
+            $(".MPrinting").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageRegistration/QualityCheck")) {
+
+            sectionDetails("marriage-toggle");
+
+            $(".QCheckm").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageRegistration/Issuance")) {
+
+            sectionDetails("marriage-toggle");
+
+            $(".Issuancem").addClass("bg-crvsblue-900");
+        }
+
+
+        // Marriage of no impediment (marriagenoimpediment-toggle)
+        else if (pageURL.includes("/MarriageNoImpediment/Assessment")) {
+            sectionDetails("marriagenoimpediment-toggle");
+
+            $(".MAssessment2").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageNoImpediment/Investigation")) {
+            sectionDetails("marriagenoimpediment-toggle");
+
+            $(".MInvestigator2").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageNoImpediment/HQOfficer")) {
+            sectionDetails("marriagenoimpediment-toggle");
+
+            $(".MHQOfficer2").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageNoImpediment/MarriageRejected")) {
+            sectionDetails("marriagenoimpediment-details");
+            sectionDetails("marriagenoimpediment-toggle");
+
+            $(".MRejected").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageNoImpediment/Issued")) {
+            sectionDetails("marriagenoimpediment-details");
+            sectionDetails("marriagenoimpediment-toggle");
+
+            $(".Issuedm2").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageNoImpediment/MarriageCancelled")) {
+            sectionDetails("marriagenoimpediment-details");
+            sectionDetails("marriagenoimpediment-toggle");
+
+            $(".MCancelled2").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageNoImpediment/MarriagePrinting")) {
+            sectionDetails("marriagenoimpediment-toggle");
+
+            $(".MPrinting2").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageNoImpediment/QualityCheck")) {
+
+            sectionDetails("marriagenoimpediment-toggle");
+
+            $(".QCheckm2").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MarriageNoImpediment/Issuance")) {
+
+            sectionDetails("marriagenoimpediment-toggle");
+
+            $(".Issuancem2").addClass("bg-crvsblue-900");
+        }
+        //
+
+        else if (pageURL.includes("/DivorceRegistration/Registration")) {
+            sectionDetails("divorce-toggle");
+
+            $(".DvRegistration").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DivorceRegistration/Assessment")) {
+            sectionDetails("divorce-toggle");
+
+            $(".DvAssessment").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DivorceRegistration/Investigation")) {
+            sectionDetails("divorce-toggle");
+
+            $(".DvInvestigator").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DivorceRegistration/HQOfficer")) {
+            sectionDetails("divorce-toggle");
+
+            $(".DvHQOfficer").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DivorceRegistration/DivorceRejected")) {
+            sectionDetails("divorce-details");
+            sectionDetails("divorce-toggle");
+
+            $(".DvRejected").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DivorceRegistration/DivorceCancelled")) {
+            sectionDetails("divorce-details");
+            sectionDetails("divorce-toggle");
+
+            $(".DvCancelled").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DivorceRegistration/Issued")) {
+            sectionDetails("divorce-details");
+            sectionDetails("divorce-toggle");
+
+            $(".Issueddv").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DivorceRegistration/DivorcePrinting")) {
+            sectionDetails("divorce-toggle");
+
+            $(".DvPrinting").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DivorceRegistration/QualityCheck")) {
+
+            sectionDetails("divorce-toggle");
+
+            $(".QCheckdv").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/DivorceRegistration/Issuance")) {
+
+            sectionDetails("divorce-toggle");
+
+            $(".Issuancedv").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/AdoptionRegistration/Assessment")) {
+            sectionDetails("adoption-toggle");
+
+            $(".ADAssessment").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/AdoptionRegistration/Investigation")) {
+            sectionDetails("adoption-toggle");
+
+            $(".ADInvestigator").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/AdoptionRegistration/HQOfficer")) {
+            sectionDetails("adoption-toggle");
+
+            $(".ADHQOfficer").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/AdoptionRegistration/AdoptionRejected")) {
+            sectionDetails("adoption-details");
+            sectionDetails("adoption-toggle");
+
+            $(".ADRejected").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/AdoptionRegistration/AdoptionCancelled")) {
+            sectionDetails("adoption-details");
+            sectionDetails("adoption-toggle");
+
+            $(".ADCancelled").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/AdoptionRegistration/Issued")) {
+            sectionDetails("adoption-details");
+            sectionDetails("adoption-toggle");
+
+            $(".Issuedad").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/AdoptionRegistration/AdoptionPrinting")) {
+            sectionDetails("adoption-toggle");
+
+            $(".ADPrinting").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/AdoptionRegistration/QualityCheck")) {
+
+            sectionDetails("adoption-toggle");
+
+            $(".QChecka").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/AdoptionRegistration/Issuance")) {
+
+            sectionDetails("adoption-toggle");
+
+            $(".Issuancea").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/CRVSLookUp/Index")) {
+            sectionDetails("lookup-toggle");
+
+            $(".Lcrvs").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/MultIDLookUp/Index")) {
+            sectionDetails("lookup-toggle");
+
+            $(".Lmultid").addClass("bg-crvsblue-900");
+        }
+
+        else if (pageURL.includes("/Report/IssuedCertificate")) {
+            sectionDetails("report-toggle");
+
+            $(".IssuedCertificate").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Report/MainReport")) {
+            sectionDetails("report-toggle");
+
+            $(".mainReports").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Report/RevenueReport")) {
+            sectionDetails("report-toggle");
+
+            $(".revenueReports").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Report/AnnualReport")) {
+            sectionDetails("report-toggle");
+
+            $(".annualReports").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Report/IssuanceReport")) {
+            sectionDetails("report-toggle");
+
+            $(".insuranceReports").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Report/PrintingReport")) {
+            sectionDetails("report-toggle");
+
+            $(".printingReports").addClass("bg-crvsblue-900");
+        } else if (pageURL.includes("/Report/CustomReport")) {
+            sectionDetails("report-toggle");
+
+            $(".customizableReports").addClass("bg-crvsblue-900");
+        }
+        else if (pageURL.includes("/Report/IssuedCertificate")) {
+            sectionDetails("report-toggle");
+
+            $(".topReports").addClass("bg-crvsblue-900");
+        }
+
+
+    });
+</script>

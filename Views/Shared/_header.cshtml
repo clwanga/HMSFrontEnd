@@ -1,0 +1,32 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+<script src="~/remote_wwwroot/js/buttonControls.js"
+        type="text/javascript"
+        charset="utf8"></script>
+<div class="bg-gradient-to-r from-green-800 via-sky-900 to-black shadow">
+    <div class="flex h-16 items-center justify-center lg:border-gray-200">
+        <div class="absolute left-2">
+            <button id="open_sidebar"
+                    type="button"
+                    class="z-10 border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden">
+                <span class="sr-only">Open sidebar</span>
+@*
+                <svg class="h-6 w-6"
+                     xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     aria-hidden="true">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 6h16M4 12h8m-8 6h16" />
+                </svg>*@
+            </button>
+        </div>
+
+        <div class="relative flex flex-row items-center justify-center">
+            <h class="text-center text-xs font-medium uppercase text-white md:text-xl">Hospital Management System</h>
+        </div>
+    </div>
+</div>

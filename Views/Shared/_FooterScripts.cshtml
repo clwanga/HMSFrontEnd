@@ -1,0 +1,73 @@
+﻿
+@*main layout codes *@
+<script src="~/toastr/toastr.js"></script>
+<script src="~/remote_wwwroot/js/section.js"></script>
+<!-- DevExtreme library -->
+<script src="~/remote_wwwroot/js/dxall.js"></script>
+<script src="~/remote_wwwroot/js/Polyfile.js"></script>
+<script src="~/remote_wwwroot/js/Excel.js"></script>
+<script src="~/remote_wwwroot/js/FileSaver.js"></script>
+<script src="~/remote_wwwroot/js/buttonControls.js" type="text/javascript" charset="utf8"></script>
+<!-- Flowbite script -->
+<script src="~/remote_wwwroot/js/Flowbite.js"></script>
+<script src="~/remote_wwwroot/js/Notice.js"></script>
+<script src="~/remote_wwwroot/js/Jspdf.js"></script>
+
+
+<script type="text/javascript">
+    const instance = new Notice();
+    toastr.options = {
+        closeButton: false,
+        debug: false,
+        newestOnTop: false,
+        progressBar: false,
+        positionClass: "toast-top-right",
+        preventDuplicates: false,
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: "2000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+        positionClass: "toast-top-right",
+        progressBar: true,
+    };
+
+    var waitTimer = 900000;
+
+    setIdleTimeout(waitTimer, function () {
+        var url1 = '@Url.Action("LogOut", "Login")';
+        window.location.href = url1;
+    }, function () {
+
+    });
+
+    function setIdleTimeout(millis, onIdle, onUnidle) {
+        var timeout = 0;
+        startTimer();
+
+        function startTimer() {
+            timeout = setTimeout(onExpires, millis);
+            document.addEventListener("mousemove", onActivity);
+            document.addEventListener("keypress", onActivity);
+        }
+
+        function onExpires() {
+            timeout = 0;
+            onIdle();
+        }
+
+        function onActivity() {
+            if (timeout) clearTimeout(timeout);
+            else onUnidle();
+            //since the mouse is moving, we turn off our event hooks for 1 second
+            document.removeEventListener("mousemove", onActivity);
+            document.removeEventListener("keypress", onActivity);
+            setTimeout(startTimer, 2000);
+        }
+    }
+</script>
+@*end main layout*@

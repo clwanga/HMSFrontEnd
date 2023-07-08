@@ -1,0 +1,13 @@
+<div
+  class="absolute h-12 flex justify-center items-center bg-slate-100 w-full bottom-0"
+>
+  <h class="text-xs md:text-sm font-medium text-center" id="footer-text"></h>
+  <script>
+    const paragraph = `
+          <p>
+            All Rights Reserved. &copy; ${new Date().getFullYear()}  Abdillah Bakari.
+          </p>
+          `;
+    document.getElementById("footer-text").innerHTML = paragraph;
+  </script>
+</div>
