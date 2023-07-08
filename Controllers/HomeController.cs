@@ -33,5 +33,20 @@ namespace InterviewFrontEnd.Controllers
         {
             return View();
         }
+
+        public IActionResult RegisterPatient()
+        {
+            return View();
+        }
+
+        public IActionResult AddVitals()
+        {
+            return View();
+        }
+
+        public IActionResult Reports()
+        {
+            return View();
+        }
     }
 }
