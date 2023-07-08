@@ -1,3 +1,276 @@
-﻿@{
-    ViewBag.Title = "Vitals";
+﻿@using Microsoft.AspNetCore.Http
+@using System.Web
+
+@{
+    ViewData["Title"] = "Vitals";
 }
+
+
+<link href="~/remote_wwwroot/css/Notice.css" rel="stylesheet" />
+<link href="~/toastr/toastr.css" rel="stylesheet" />
+<script src="~/remote_wwwroot/js/Notice.js"></script>
+
+<style>
+    label.error {
+        color: red;
+    }
+
+    input.error, textarea.error {
+        border: 2px solid red;
+    }
+
+    input.valid, textarea.valid {
+        border: 2px solid green;
+    }
+</style>
+<div class="px-6 py-2">
+    <div class="w-full border-b-2 border-black py-2 px-2 flex flex-row items-center">
+        <div class="flex flex-row items-center space-x-2">
+            <span class="px-3 py-3 bg-crvsicon-100 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-crvsicon-900" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                    <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                </svg>
+            </span>
+
+            <h class="uppercase text-xl font-semibold">Add Vitals</h>
+            <button data-bs-toggle="modal"
+                    data-bs-target="#addNewPatientVitals"
+                    class="absolute right-10 bg-transparent uppercase hover:bg-crvsgreen-900 text-crvsgreen-700 font-semibold hover:text-white py-2 px-4 border border-crvsgreen-900 hover:border-transparent rounded">
+                Add Vitals
+            </button>
+        </div>
+    </div>
+    <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+    </div>
+    <!-- table content -->
+
+    <div id="tablecontent" class="mt-6 mb-6 h-auto"></div>
+</div>
+<div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+     id="addNewPatientVitals"
+     tabindex="-1"
+     aria-labelledby="addNewPatientVitals"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
+        <div class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+            <div class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                <h5 class="text-xl font-medium leading-normal text-gray-800 uppercase"
+                    id="addNewPatientVitals">
+                    add vitals
+                </h5>
+                <button type="button"
+                        class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body relative p-4">
+                <form id="addvitals">
+                    <div class="py-4 px-6 grid grid-cols-3  gap-2">
+                        <div class="flex flex-col">
+                            <label class="uppercase font-medium">Patient Name:</label>
+                            <input class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700"
+                                   id="patientName"
+                                   placeholder=""
+                                   type="text" name="patientName" />
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="uppercase font-medium">Date of Registration:</label>
+                            <input class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700"
+                                   id="date"
+                                   placeholder=""
+                                   type="date" name="date" />
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label class="uppercase font-medium">Height:</label>
+                            <input class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700"
+                                   id="height"
+                                   placeholder=""
+                                   type="number" name="height" />
+                        </div>
+
+                        <div class="flex flex-col space-y-2">
+                            <label class="uppercase font-medium">Weight:</label>
+                            <input class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700"
+                                   id="weight"
+                                   placeholder=""
+                                   type="number" name="weight" />
+                        </div>
+
+                        <div class="flex flex-col space-y-2">
+                            <label class="uppercase font-medium">BMI:</label>
+                            <input class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700"
+                                   id="bmi"
+                                   placeholder=""
+                                   type="text" name="bmi" />
+                        </div>
+
+                        <div class="flex flex-col space-y-2">
+                            <label class="uppercase font-medium">General Health:</label>
+                            <select class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700" id="category" name="category">
+                                <option value="Good">Good</option>
+                                <option value="Poor">Poor</option>
+                            </select>
+                        </div>
+
+                        <div class="flex flex-col space-y-2">
+                            <label class="uppercase font-medium">On Diet</label>
+                            <select class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700" id="onDiet" name="onDiet">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col space-y-2">
+                            <label class="uppercase font-medium">On Drugs</label>
+                            <select class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700" id="onDrugs" name="onDrugs">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col space-y-2">
+                            <label class="uppercase font-medium">Comment</label>
+                            <input class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700"
+                                   id="comment"
+                                   placeholder=""
+                                   type="text" name="comment" />
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer space-x-3  px-4 flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+                <button type="button"
+                        id="btnAddStakeholder"
+                        class="bg-crvsgreen-300 hover:bg-crvsgreen-800 hover:text-white text-crvsgreen-900 rounded-md text-sm font-medium px-5 py-2.5 btnAddUser">
+                    Add Patient Vitals
+                </button>
+
+                <button type="button"
+                        data-bs-dismiss="modal"
+                        class="bg-red-300 hover:bg-red-800 hover:text-white text-red-900 rounded-md text-sm font-medium px-5 py-2.5">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/remote_wwwroot/js/jquery-3.6.0.js"></script>
+<script src="~/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/wwwroot/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="~/toastr/toastr.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    toastr.options = {
+        closeButton: false,
+        debug: false,
+        newestOnTop: false,
+        progressBar: false,
+        positionClass: "toast-top-center",
+        preventDuplicates: false,
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: "2000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+        progressBar: true,
+    };
+
+    $(document).ready(function () {
+        instance.showLoading({
+            type: 'dots',
+            color: '#ffffff',
+            backgroundColor: 'rgba(0,0,0,.6)',
+            title: 'Loading...',
+            fontSize: 16,
+        });
+        instance.hideLoading();
+    });
+
+    $("#createNewUserForm").validate({
+        rules: {
+            firstname: {
+                required: true,
+                lettersonly: true,
+                nowhitespace: true
+            },
+            lastname: {
+                required: true,
+                lettersonly: true
+            },
+            date: {
+                required: true,
+                date: true
+            }
+
+        },
+    });
+
+
+
+    $("#add").click(() => {
+        if ($("#createNewUserForm").valid()) {
+
+            instance.showLoading({
+                type: 'dots',
+                color: '#ffffff',
+                backgroundColor: 'rgba(0,0,0,.6)',
+                title: 'Loading...',
+                fontSize: 16,
+            });
+
+            var fullname = $("#name").val();
+            var email = $("#email").val();
+            var phone = $("#phone").val();
+            var stakeholderId = $("#stakeholderId").val();
+            var role = $("#role").val();
+
+            var FilledData = {
+                email: email,
+                fullname: fullname,
+                mobile: phone,
+                stakeholderId: stakeholderId,
+                userRole: role
+            }
+            $.ajax({
+                url: '@Url.Action("AddUser", "User")',
+                type: "POST",
+                data: FilledData,
+                dataType: "json",
+                success: function (result) {
+                    instance.hideLoading();
+                    GetAllUsers();
+
+                    toastr.success(result.message);
+
+                    $("#tablecontent")
+                        .dxDataGrid("instance")
+                        .refresh();
+
+                    $('#addNewUser').modal('hide');
+                    $('#addNewUser').modal({ show: false });
+
+                    $("#name").val("");
+                    $("#email").val("");
+                    $("#phone").val("");
+                    $("#stakeholderId").val("");
+                    $("#role").val("");
+                },
+                error: function (err) {
+                    instance.hideLoading();
+                    toastr.error(result.message);
+                }
+            });
+        } else {
+            return false;
+        }
+
+    });
+
+</script>
+<script src="~/remote_wwwroot/Index.min.js"></script>
