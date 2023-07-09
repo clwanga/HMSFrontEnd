@@ -145,37 +145,15 @@
         progressBar: true,
     };
 
-    //$("#createNewPatientForm").validate({
-    //    rules: {
-    //        firstname: {
-    //            required: true,
-    //            lettersonly: true,
-    //            nowhitespace: true
-    //        },
-    //        lastname: {
-    //            required: true,
-    //            lettersonly:true
-    //        },
-    //        date: {
-    //            required: true,
-    //            date: true
-    //        },
-    //        gender: {
-    //            required: true
-    //        }
-
-    //    },
-    //});
-
     $("#register").click(() => {
 
-        //instance.showLoading({
-        //    type: 'dots',
-        //    color: '#ffffff',
-        //    backgroundColor: 'rgba(0,0,0,.6)',
-        //    title: 'Loading...',
-        //    fontSize: 16,
-        //});
+        instance.showLoading({
+            type: 'dots',
+            color: '#ffffff',
+            backgroundColor: 'rgba(0,0,0,.6)',
+            title: 'Loading...',
+            fontSize: 16,
+        });
 
         var firstName = $("#firstname").val();
         var lastName = $("#lastname").val();
@@ -189,61 +167,33 @@
             Gender: gender,
         }
 
-        console.log(FilledData);
-
         $.ajax({
-            url: '@Url.Action("NoInformantData", "Home")',
+            url: '@Url.Action("AddPatient", "Home")',
             type: "POST",
             data: FilledData,
             dataType: "json",
             success: function (result) {
-                console.log(result);
+                instance.hideLoading();
 
-                if (result.code == 200) {
-                    GetEarlyApplicationList(result);
-                }
-                else {
-                    toastr.error(result.message);
-                }
+                toastr.success("Patient added successful");
 
+                $("#tablecontent")
+                    .dxDataGrid("instance")
+                    .refresh();
+
+                $('#addNewPatient').modal('hide');
+                $('#addNewPatient').modal({ show: false });
+
+                $("#firstname").val("");
+                $("#lastname").val("");
+                $("#date").val("");
+                $("#gender").val("");
             },
             error: function (err) {
-                toastr.error("Something went wrong");
+                instance.hideLoading();
+                toastr.error("Request failed");
             }
         });
-        //$.ajax({
-        //    url: '@Url.Action("AddPatient", "Home")',
-        //    type: "POST",
-        //    data: FilledData,
-        //    dataType: "json",
-        //    success: function (result) {
-        //        instance.hideLoading();
-
-        //        toastr.success("Patient added successful");
-
-        //        $("#tablecontent")
-        //            .dxDataGrid("instance")
-        //            .refresh();
-
-        //        $('#addNewPatient').modal('hide');
-        //        $('#addNewPatient').modal({ show: false });
-
-        //        $("#firstname").val("");
-        //        $("#lastname").val("");
-        //        $("#date").val("");
-        //        $("#gender").val("");
-        //    },
-        //    error: function (err) {
-        //        instance.hideLoading();
-        //        toastr.error("Request failed");
-        //    }
-        //});
-        //if ($("#createNewPatientForm").valid()) {
-
-
-        //} else {
-        //    return false;
-        //}
 
     });
 

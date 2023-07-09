@@ -1,4 +1,4 @@
-﻿    using InterviewFrontEnd.Endpoints;
+﻿using InterviewFrontEnd.Endpoints;
 using InterviewFrontEnd.Models;
 using InterviewWebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -88,8 +88,8 @@ namespace InterviewFrontEnd.Controllers
                 {
                     var json = JsonConvert.DeserializeObject<PatientRegResponse>(response.Content);
 
-                    code = (int)json.code;
-                    message = json.message.ToString();
+                    //code = (int)json.code;
+                    //message = json.message.ToString();
 
                     string stringjson1 = JsonConvert.SerializeObject(json);
 
