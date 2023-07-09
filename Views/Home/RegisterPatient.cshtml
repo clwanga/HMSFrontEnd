@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
 @using System.Web
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Patient Registration";
@@ -65,7 +67,7 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body relative p-4">
-                <form id="createNewUserForm">
+                <form id="createNewPatientForm">
                     <div class="py-4 px-6 grid grid-cols-2  gap-2">
                         <div class="flex flex-col">
                             <label class="uppercase font-medium">First Name:</label>
@@ -85,23 +87,17 @@
                         <div class="flex flex-col">
                             <label class="uppercase font-medium">Date of Birth:</label>
                             <input class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700 middleName"
-                                   id="email"
+                                   id="date"
                                    placeholder="eg. 1-01-1000"
                                    type="date" name="date" />
                         </div>
-
-                        @*                        <div class="flex flex-col space-y-2">
-                        <label class="uppercase font-medium">Stakeholder Name:</label>
-                        <select class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700" id="stakeholderId" name="stakeholderId">
-                        @if (stakeholdersDatum != null)
-                        {
-                        foreach (var item in stakeholdersDatum)
-                        {
-                        <option value="@item.id">@item.stakeholderName</option>
-                        }
-                        }
-                        </select>
-                        </div>*@
+                        <div class="flex flex-col">
+                            <label class="uppercase font-medium">Gender</label>
+                            <select class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700" id="gender" name="gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
 
                     </div>
 
@@ -149,94 +145,105 @@
         progressBar: true,
     };
 
-    $(document).ready(function () {
-        instance.showLoading({
-            type: 'dots',
-            color: '#ffffff',
-            backgroundColor: 'rgba(0,0,0,.6)',
-            title: 'Loading...',
-            fontSize: 16,
-        });
-        instance.hideLoading();
-    });
+    //$("#createNewPatientForm").validate({
+    //    rules: {
+    //        firstname: {
+    //            required: true,
+    //            lettersonly: true,
+    //            nowhitespace: true
+    //        },
+    //        lastname: {
+    //            required: true,
+    //            lettersonly:true
+    //        },
+    //        date: {
+    //            required: true,
+    //            date: true
+    //        },
+    //        gender: {
+    //            required: true
+    //        }
 
-    $("#createNewUserForm").validate({
-        rules: {
-            firstname: {
-                required: true,
-                lettersonly: true,
-                nowhitespace: true
-            },
-            lastname: {
-                required: true,
-                lettersonly:true
-            },
-            date: {
-                required: true,
-                date: true
-            }
-
-        },
-    });
-
-
+    //    },
+    //});
 
     $("#register").click(() => {
-        if ($("#createNewUserForm").valid()) {
 
-            instance.showLoading({
-                type: 'dots',
-                color: '#ffffff',
-                backgroundColor: 'rgba(0,0,0,.6)',
-                title: 'Loading...',
-                fontSize: 16,
-            });
+        //instance.showLoading({
+        //    type: 'dots',
+        //    color: '#ffffff',
+        //    backgroundColor: 'rgba(0,0,0,.6)',
+        //    title: 'Loading...',
+        //    fontSize: 16,
+        //});
 
-            var fullname = $("#name").val();
-            var email = $("#email").val();
-            var phone = $("#phone").val();
-            var stakeholderId = $("#stakeholderId").val();
-            var role = $("#role").val();
+        var firstName = $("#firstname").val();
+        var lastName = $("#lastname").val();
+        var date = $("#date").val();
+        var gender = $("#gender").val();
 
-            var FilledData = {
-                email: email,
-                fullname: fullname,
-                mobile: phone,
-                stakeholderId: stakeholderId,
-                userRole: role
-            }
-            $.ajax({
-                url: '@Url.Action("AddUser", "User")',
-                type: "POST",
-                data: FilledData,
-                dataType: "json",
-                success: function (result) {
-                    instance.hideLoading();
-                    GetAllUsers();
+        var FilledData = {
+            FirstName: firstname,
+            LastName: lastname,
+            DOB: date,
+            Gender: gender,
+        }
 
-                    toastr.success(result.message);
+        console.log(FilledData);
 
-                    $("#tablecontent")
-                        .dxDataGrid("instance")
-                        .refresh();
+        $.ajax({
+            url: '@Url.Action("NoInformantData", "Home")',
+            type: "POST",
+            data: FilledData,
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
 
-                    $('#addNewUser').modal('hide');
-                    $('#addNewUser').modal({ show: false });
-
-                    $("#name").val("");
-                    $("#email").val("");
-                    $("#phone").val("");
-                    $("#stakeholderId").val("");
-                    $("#role").val("");
-                },
-                error: function (err) {
-                    instance.hideLoading();
+                if (result.code == 200) {
+                    GetEarlyApplicationList(result);
+                }
+                else {
                     toastr.error(result.message);
                 }
-            });
-        } else {
-            return false;
-        }
+
+            },
+            error: function (err) {
+                toastr.error("Something went wrong");
+            }
+        });
+        //$.ajax({
+        //    url: '@Url.Action("AddPatient", "Home")',
+        //    type: "POST",
+        //    data: FilledData,
+        //    dataType: "json",
+        //    success: function (result) {
+        //        instance.hideLoading();
+
+        //        toastr.success("Patient added successful");
+
+        //        $("#tablecontent")
+        //            .dxDataGrid("instance")
+        //            .refresh();
+
+        //        $('#addNewPatient').modal('hide');
+        //        $('#addNewPatient').modal({ show: false });
+
+        //        $("#firstname").val("");
+        //        $("#lastname").val("");
+        //        $("#date").val("");
+        //        $("#gender").val("");
+        //    },
+        //    error: function (err) {
+        //        instance.hideLoading();
+        //        toastr.error("Request failed");
+        //    }
+        //});
+        //if ($("#createNewPatientForm").valid()) {
+
+
+        //} else {
+        //    return false;
+        //}
 
     });
 
