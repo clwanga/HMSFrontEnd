@@ -1,12 +1,18 @@
-﻿namespace InterviewWebAPI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace InterviewFrontEnd.Models.Requests
 {
     public class Requests
     {
         public class PatientRegRequest
         {
+            [Required(ErrorMessage = "Please enter firstname")]
             public string FirstName { get; set; }
+            [Required]
             public string LastName { get; set; }
+            [Required]
             public string DOB { get; set; }
+            [Required]
             public string Gender { get; set; }
         }
 

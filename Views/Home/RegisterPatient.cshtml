@@ -3,6 +3,8 @@
 @using System.Web
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
+@model InterviewFrontEnd.Models.Requests.Requests.PatientRegRequest;
+
 @{
     ViewData["Title"] = "Patient Registration";
 }
@@ -67,55 +69,59 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body relative p-4">
-                <form id="createNewPatientForm">
+                <form asp-action="RegisterNewPatient">
                     <div class="py-4 px-6 grid grid-cols-2  gap-2">
                         <div class="flex flex-col">
                             <label class="uppercase font-medium">First Name:</label>
-                            <input class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700 firstName"
+                            <input asp-for="FirstName" class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700 firstName"
                                    id="firstname"
                                    placeholder="eg. Paul"
                                    type="text" name="firstname" />
+                            <span asp-validation-for="FirstName"></span>
                         </div>
                         <div class="flex flex-col">
                             <label class="uppercase font-medium">Last Name:</label>
-                            <input class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700 lastName"
+                            <input asp-for="LastName" class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700 lastName"
                                    id="lastname"
                                    placeholder="eg. John"
                                    type="text" name="lastname" />
+                            <span asp-validation-for="LastName"></span>
                         </div>
 
                         <div class="flex flex-col">
                             <label class="uppercase font-medium">Date of Birth:</label>
-                            <input class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700 middleName"
+                            <input asp-for="DOB" class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700 middleName"
                                    id="date"
                                    placeholder="eg. 1-01-1000"
                                    type="date" name="date" />
+                            <span asp-validation-for="DOB"></span>
                         </div>
                         <div class="flex flex-col">
                             <label class="uppercase font-medium">Gender</label>
-                            <select class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700" id="gender" name="gender">
+                            <select asp-for="Gender" class="h-12 px-2 mt-2 w-full border-2 border-slate-300 rounded-md focus:outline-crvsblue-700" id="gender" name="gender">
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
+                            <span asp-validation-for="Gender" class="error"></span>
                         </div>
 
                     </div>
+                    <div class="modal-footer space-x-3  px-4 flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+                        <button type="submit"
+                                id="register"
+                                class="bg-crvsgreen-300 hover:bg-crvsgreen-800 hover:text-white text-crvsgreen-900 rounded-md text-sm font-medium px-5 py-2.5 register">
+                            Submit
+                        </button>
 
+                        <button type="button"
+                                data-bs-dismiss="modal"
+                                class="bg-red-300 hover:bg-red-800 hover:text-white text-red-900 rounded-md text-sm font-medium px-5 py-2.5">
+                            Cancel
+                        </button>
+                    </div>
                 </form>
             </div>
-            <div class="modal-footer space-x-3  px-4 flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                <button type="button"
-                        id="register"
-                        class="bg-crvsgreen-300 hover:bg-crvsgreen-800 hover:text-white text-crvsgreen-900 rounded-md text-sm font-medium px-5 py-2.5 register">
-                    Register
-                </button>
 
-                <button type="button"
-                        data-bs-dismiss="modal"
-                        class="bg-red-300 hover:bg-red-800 hover:text-white text-red-900 rounded-md text-sm font-medium px-5 py-2.5">
-                    Cancel
-                </button>
-            </div>
         </div>
     </div>
 </div>
@@ -144,58 +150,6 @@
         hideMethod: "fadeOut",
         progressBar: true,
     };
-
-    $("#register").click(() => {
-
-        instance.showLoading({
-            type: 'dots',
-            color: '#ffffff',
-            backgroundColor: 'rgba(0,0,0,.6)',
-            title: 'Loading...',
-            fontSize: 16,
-        });
-
-        var firstName = $("#firstname").val();
-        var lastName = $("#lastname").val();
-        var date = $("#date").val();
-        var gender = $("#gender").val();
-
-        var FilledData = {
-            FirstName: firstname,
-            LastName: lastname,
-            DOB: date,
-            Gender: gender,
-        }
-
-        $.ajax({
-            url: '@Url.Action("AddPatient", "Home")',
-            type: "POST",
-            data: FilledData,
-            dataType: "json",
-            success: function (result) {
-                instance.hideLoading();
-
-                toastr.success("Patient added successful");
-
-                $("#tablecontent")
-                    .dxDataGrid("instance")
-                    .refresh();
-
-                $('#addNewPatient').modal('hide');
-                $('#addNewPatient').modal({ show: false });
-
-                $("#firstname").val("");
-                $("#lastname").val("");
-                $("#date").val("");
-                $("#gender").val("");
-            },
-            error: function (err) {
-                instance.hideLoading();
-                toastr.error("Request failed");
-            }
-        });
-
-    });
 
 </script>
 <script src="~/remote_wwwroot/Index.min.js"></script>

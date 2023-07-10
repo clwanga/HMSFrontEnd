@@ -4,7 +4,7 @@
     {
         public static string BaseURL = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("API_BASE_URLS")["BASE_URL"];
 
-        public static string AddNewPatient = "Registration";
+        public static string AddNewPatient = "RegisterPatient";
         public static string AddPatientVitals = "";
         public static string Report = "";
         public static string ReportByDate = "";

@@ -1,11 +1,10 @@
 ﻿using InterviewFrontEnd.Endpoints;
 using InterviewFrontEnd.Models;
-using InterviewWebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Diagnostics;
-using static InterviewWebAPI.Models.Requests;
+using static InterviewFrontEnd.Models.Requests.Requests;
 using static InterviewWebAPI.Models.Responses;
 
 namespace InterviewFrontEnd.Controllers
@@ -56,8 +55,13 @@ namespace InterviewFrontEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<string> AddPatient(PatientRegRequest param)
+        public async Task<string> RegisterNewPatient([Bind("FirstName,LastName,DOB,Gender")]PatientRegRequest param)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(param);
+            //}
+
             RestClient _client = new(Connections.BaseURL);
             int code = 0;
             string message = String.Empty;
